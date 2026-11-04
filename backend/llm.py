@@ -22,7 +22,7 @@ MODELOS = [
     "gemini-2.0-flash-lite",
 ]
 
-# quantas rodadas de tentativas (com espera entre elas). O avaliar usa 4, que e paciente;
+# quantas rodadas de tentativas (com espera entre elas). the evaluation script uses 4 (patient);
 # a API usa 1, porque uma tela nao pode ficar minutos esperando
 RODADAS = 4
 

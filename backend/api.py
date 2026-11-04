@@ -1,8 +1,8 @@
 import sqlite3
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-import llm
-from buscar import carregar_titulos, buscar_vibe
+from . import llm
+from .search import carregar_titulos, buscar_vibe
 
 llm.RODADAS = 1  # na API, se o LLM estiver ocupado, falha rapido e a busca segue sem ele
 llm.PAUSA_SEGUNDOS = 60  # e depois de falhar, nem tenta de novo por 1 minuto

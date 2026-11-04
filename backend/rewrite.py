@@ -3,7 +3,7 @@ import json
 import os
 from pydantic import BaseModel
 from google.genai import types
-from llm import gerar
+from .llm import gerar
 
 ARQUIVO_CACHE = "reescritas.json"
 

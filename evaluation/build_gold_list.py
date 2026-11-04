@@ -3,7 +3,7 @@ import sys
 import json
 import time
 import sqlite3
-from tmdb import pedir, no_banco, baixar_e_salvar
+from backend.tmdb import pedir, no_banco, baixar_e_salvar
 
 
 def escolher(nome):
@@ -36,9 +36,9 @@ def escolher(nome):
     return saida
 
 
-# uso: python -m evaluation.montar_lista_ouro [arquivo_de_vibes.json] [lista_de_saida.json]
+# uso: python -m evaluation.build_gold_list [arquivo_de_vibes.json] [lista_de_saida.json]
 ARQ_VIBES = sys.argv[1] if len(sys.argv) > 1 else "evaluation/data/vibes.json"
-ARQ_SAIDA = sys.argv[2] if len(sys.argv) > 2 else "evaluation/data/lista_ouro.json"
+ARQ_SAIDA = sys.argv[2] if len(sys.argv) > 2 else "evaluation/data/gold_list.json"
 
 
 def main():
@@ -74,4 +74,5 @@ def main():
     conn.close()
 
 
-main()
+if __name__ == "__main__":
+    main()

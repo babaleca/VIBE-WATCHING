@@ -1,10 +1,10 @@
 # gera uma folha em HTML pra alguem marcar quais resultados "cabem" em cada vibe
-# uso: python -m evaluation.gerar_avaliacao evaluation/data/vibes_irma.json [metodo] [saida.html]
+# uso: python -m evaluation.build_rating_sheet evaluation/data/vibes_sister.json [metodo] [saida.html]
 # o arquivo de vibes pode ser um .json (usa as chaves) ou um .txt (uma vibe por linha)
 import sys
 import json
 import sqlite3
-from buscar import carregar_titulos, buscar_vibe
+from backend.search import carregar_titulos, buscar_vibe
 
 QUANTOS = 10
 
@@ -41,7 +41,7 @@ def main():
             })
         dados["vibes"].append({"vibe": vibe, "itens": itens})
 
-    with open("evaluation/modelo_avaliacao.html", encoding="utf-8") as arq:
+    with open("evaluation/rating_sheet_template.html", encoding="utf-8") as arq:
         pagina = arq.read()
     # evita que um "</script>" dentro dos dados quebre a pagina
     texto = json.dumps(dados, ensure_ascii=False).replace("</", "<\\/")
@@ -51,4 +51,5 @@ def main():
     print("pronto:", saida)
 
 
-main()
+if __name__ == "__main__":
+    main()

@@ -4,9 +4,9 @@ Search movies and series by vibe, not by title or genre. Instead of looking for 
 
 You can type the vibe in any language. The site itself is in English.
 
-![Vibe Watching in action](preview.gif)
+![Vibe Watching in action](docs/preview.gif)
 
-Full video (38s): [demo.mp4](demo.mp4)
+Full video (38s): [demo.mp4](docs/demo.mp4)
 
 ## Why I built this
 
@@ -23,9 +23,19 @@ I always want to watch something with a very specific feeling and never find it.
 
 The API is built with FastAPI and the interface with React.
 
+## Project structure
+
+```
+backend/      FastAPI app, search, query rewrite, LLM rerank, Gemini wrapper, TMDB client
+scripts/      build the database: download titles, generate embeddings, English titles
+evaluation/   reference lists, vibe lists and scripts to measure search quality
+web/          React interface (Vite)
+docs/         demo GIF and video
+```
+
 ## How I know if it is any good
 
-I built a reference list with vibes and titles that I know fit each one (it is my own taste). `evaluation/avaliar.py` runs the search for each vibe and counts how many of those titles show up in the top 10, so I can compare one method with another using a number instead of just eyeballing results.
+I built a reference list with vibes and titles that I know fit each one (it is my own taste). `evaluation/evaluate.py` runs the search for each vibe and counts how many of those titles show up in the top 10, so I can compare one method with another using a number instead of just eyeballing results.
 
 Methods compared: `puro` (embedding of the vibe as written), `reescrito` (embedding of the description written by the LLM), `combinado` (vibe + description) and `rerank` (combined + LLM reordering).
 
@@ -90,23 +100,23 @@ GEMINI_API_KEY=your_key
 Build the database and the embeddings:
 
 ```
-python baixar_titulos.py filme 50
-python baixar_titulos.py serie 25
-python gerar_embeddings.py
-python titulos_em_ingles.py
+python -m scripts.download_titles filme 50
+python -m scripts.download_titles serie 25
+python -m scripts.generate_embeddings
+python -m scripts.titles_to_english
 ```
 
 Search from the terminal:
 
 ```
-python buscar.py "cozy witchy"
-python buscar.py "cozy" --tipo serie --sem terror
+python -m backend.search "cozy witchy"
+python -m backend.search "cozy" --tipo serie --sem terror
 ```
 
 Run the interface (two terminals):
 
 ```
-uvicorn api:app --port 8000
+uvicorn backend.api:app --port 8000
 ```
 
 ```
@@ -118,11 +128,11 @@ npm run dev
 Evaluate the search:
 
 ```
-python -m evaluation.avaliar
-python -m evaluation.avaliar --lista evaluation/data/lista_teste_irma.json --detalhes
+python -m evaluation.evaluate
+python -m evaluation.evaluate --lista evaluation/data/test_list_sister.json --detalhes
 ```
 
-Everything related to evaluation (scripts, reference lists, vibe lists) lives in the `evaluation/` folder. Run these commands from the repository root.
+Run all commands from the repository root. The database and caches (`filmes.db`, `*.json` caches) are created there and are not committed.
 
 The database (`filmes.db`) and the embedding cache are not in the repository. They are created when you run the scripts.
 

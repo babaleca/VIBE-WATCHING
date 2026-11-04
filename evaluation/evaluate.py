@@ -1,6 +1,6 @@
 import argparse
 import json
-from buscar import carregar_titulos, buscar_vibe
+from backend.search import carregar_titulos, buscar_vibe
 
 TOP = 10  # quantos resultados olhar em cada busca
 TODOS_METODOS = ["puro", "reescrito", "combinado", "rerank"]
@@ -10,7 +10,7 @@ PADRAO = ["puro", "combinado", "rerank"]  # "reescrito" gasta cota e perdeu nas 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--detalhes", action="store_true")  # mostra os resultados de cada busca
-    parser.add_argument("--lista", default="evaluation/data/lista_ouro.json")  # qual lista de titulos esperados
+    parser.add_argument("--lista", default="evaluation/data/gold_list.json")  # qual lista de titulos esperados
     parser.add_argument("--metodos", nargs="+", choices=TODOS_METODOS, default=PADRAO)
     args = parser.parse_args()
     METODOS = args.metodos
@@ -72,4 +72,5 @@ def main():
         print(f"(total conta so {len(validas)} de {len(ouro)} vibes: as outras tiveram falha do LLM)")
 
 
-main()
+if __name__ == "__main__":
+    main()

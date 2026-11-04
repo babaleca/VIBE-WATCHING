@@ -7,8 +7,8 @@ import numpy as np
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-from reescrever import reescrever
-from rerank import reranquear
+from .rewrite import reescrever
+from .rerank import reranquear
 
 load_dotenv()
 client = genai.Client()

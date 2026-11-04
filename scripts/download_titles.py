@@ -1,7 +1,7 @@
 import sys
 import time
 import sqlite3
-from tmdb import CAMPOS, pedir, baixar_e_salvar
+from backend.tmdb import CAMPOS, pedir, baixar_e_salvar
 
 
 def main(tipo, paginas):
@@ -27,8 +27,8 @@ def main(tipo, paginas):
 
 
 if __name__ == "__main__":
-    # uso: python baixar_titulos.py serie 25
+    # uso: python -m scripts.download_titles serie 25
     if len(sys.argv) != 3 or sys.argv[1] not in CAMPOS:
-        print("uso: python baixar_titulos.py filme|serie numero_de_paginas")
+        print("uso: python -m scripts.download_titles filme|serie numero_de_paginas")
     else:
         main(sys.argv[1], int(sys.argv[2]))

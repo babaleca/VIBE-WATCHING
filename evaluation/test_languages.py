@@ -1,6 +1,6 @@
 # mesma vibe em varios idiomas: os resultados deveriam ser parecidos
-# uso: python -m evaluation.testar_idiomas
-from buscar import carregar_titulos, buscar_vibe
+# uso: python -m evaluation.test_languages
+from backend.search import carregar_titulos, buscar_vibe
 
 # o primeiro de cada grupo (ingles) e a referencia
 VIBES = {
@@ -39,4 +39,5 @@ def main():
             print("   ", ", ".join(nomes))
 
 
-main()
+if __name__ == "__main__":
+    main()

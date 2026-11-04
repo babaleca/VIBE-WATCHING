@@ -4,7 +4,7 @@ import os
 import sqlite3
 from pydantic import BaseModel
 from google.genai import types
-from llm import gerar
+from .llm import gerar
 
 ARQUIVO_CACHE = "rerank_cache.json"
 MAX_ESCOLHAS = 30

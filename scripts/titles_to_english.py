@@ -1,7 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor
 import shutil
 import sqlite3
-import tmdb
+from backend import tmdb
 
 # troca so o NOME e o POSTER de cada titulo pelas versoes em ingles.
 # os vetores (embeddings) continuam os mesmos, entao nao gasta cota do Gemini.
@@ -68,4 +68,5 @@ def main():
     conn.close()
 
 
-main()
+if __name__ == "__main__":
+    main()

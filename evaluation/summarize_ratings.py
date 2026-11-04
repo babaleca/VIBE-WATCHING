@@ -1,12 +1,12 @@
 # junta os arquivos de respostas e mostra quantos resultados "cabem" em cada vibe
-# uso: python -m evaluation.resumir_avaliacao respostas-maria.json respostas-joao.json
+# uso: python -m evaluation.summarize_ratings respostas-maria.json respostas-joao.json
 import sys
 import json
 
 
 def main():
     if len(sys.argv) < 2:
-        print("uso: python -m evaluation.resumir_avaliacao respostas-*.json")
+        print("uso: python -m evaluation.summarize_ratings respostas-*.json")
         return
 
     por_vibe = {}  # vibe -> [quantos marcaram "cabe", quantos marcaram ao todo]
@@ -35,4 +35,5 @@ def main():
     print("\nobs: conta so o que foi marcado; titulos pulados ficam de fora.")
 
 
-main()
+if __name__ == "__main__":
+    main()
