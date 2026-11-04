@@ -1,0 +1,286 @@
+/* ---------- fundo escuro por cima de tudo ---------- */
+.recibo-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  overflow-y: auto;
+  padding: 56px 16px 32px;
+  background: rgba(12, 14, 32, 0.88);
+  animation: aparecer 0.25s ease-out;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fechar {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 101;
+  width: 46px;
+  height: 46px;
+  background: var(--tomate);
+  color: var(--creme);
+  border: 4px solid var(--tinta);
+  box-shadow: 4px 4px 0 var(--tinta);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.fechar:hover {
+  background: var(--mostarda);
+  color: var(--tinta);
+}
+
+/* margin auto: centraliza, e se for alto demais o fundo rola */
+.palco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+
+/* ---------- saida do papel ---------- */
+.saida {
+  width: 294px;
+  overflow: hidden; /* o papel so aparece acima da fenda */
+  margin-bottom: -4px;
+}
+
+/* o papel comeca escondido embaixo e sobe aos "soquinhos" */
+.folha {
+  transform: translateY(100%);
+  animation: subir var(--tempo) steps(var(--passos), end) forwards;
+}
+
+@keyframes subir {
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* ---------- a maquininha ---------- */
+.maquina {
+  position: relative;
+  z-index: 2;
+  width: 340px;
+  max-height: 260px;
+  padding: 0 16px 14px;
+  background: var(--mostarda);
+  border: 4px solid var(--tinta);
+  box-shadow: 8px 8px 0 var(--tinta);
+  transition:
+    max-height 0.7s,
+    opacity 0.6s,
+    transform 0.7s,
+    padding 0.7s,
+    border-width 0.7s,
+    box-shadow 0.7s;
+}
+
+.maquina.imprimindo {
+  animation: tremer 0.25s steps(2) infinite;
+}
+
+@keyframes tremer {
+  50% {
+    transform: translateX(2px);
+  }
+}
+
+/* depois de imprimir, ela afunda e some */
+.maquina.saindo {
+  max-height: 0;
+  opacity: 0;
+  padding-bottom: 0;
+  border-width: 0;
+  box-shadow: none;
+  overflow: hidden;
+  transform: translateY(70px);
+}
+
+.fenda {
+  width: 280px;
+  height: 14px;
+  margin: 0 auto 14px;
+  background: var(--tinta);
+}
+
+.painel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.visor {
+  flex: 1;
+  padding: 8px 10px;
+  background: #0f2a2a;
+  border: 3px solid var(--tinta);
+  color: var(--agua);
+  font-size: 22px;
+}
+
+.piscando {
+  animation: piscar 0.8s steps(2) infinite;
+}
+
+@keyframes piscar {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.luzes {
+  display: grid;
+  gap: 6px;
+}
+
+.luz {
+  width: 14px;
+  height: 14px;
+  border: 3px solid var(--tinta);
+}
+
+.luz.vermelha {
+  background: var(--tomate);
+}
+
+.luz.amarela {
+  background: var(--creme);
+  animation: piscar 0.5s steps(2) infinite;
+}
+
+.luz.verde {
+  background: var(--agua);
+}
+
+.marca {
+  margin-top: 12px;
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: var(--tinta);
+}
+
+/* ---------- o recibo em si ---------- */
+.recibo-wrap {
+  width: 294px;
+  padding: 22px 22px 34px;
+}
+
+.recibo {
+  position: relative;
+  width: 250px;
+  padding: 18px 16px 22px;
+  background: #fbf9f1; /* papel termico */
+  color: var(--tinta);
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+/* bordinha serrilhada embaixo */
+.recibo::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -14px;
+  height: 14px;
+  background:
+    linear-gradient(-45deg, transparent 10px, #fbf9f1 0),
+    linear-gradient(45deg, transparent 10px, #fbf9f1 0);
+  background-size: 20px 14px;
+}
+
+.recibo-topo {
+  text-align: center;
+}
+
+.recibo-logo {
+  margin-bottom: 4px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.recibo-pequeno {
+  font-size: 17px;
+  opacity: 0.8;
+  text-align: center;
+}
+
+.pontilhada {
+  margin: 10px 0;
+  border-top: 3px dashed var(--tinta);
+  opacity: 0.55;
+}
+
+.recibo-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 17px;
+}
+
+.recibo-vibe {
+  margin-top: 6px;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.recibo-lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 5px;
+}
+
+.recibo-lista li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.item-nome {
+  text-transform: uppercase;
+}
+
+.item-tipo {
+  flex: none;
+  opacity: 0.7;
+  font-size: 17px;
+}
+
+.recibo-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24px;
+}
+
+.codigo {
+  display: flex;
+  justify-content: center;
+  height: 46px;
+}
+
+.recibo-rodape {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 17px;
+}
+
+/* ---------- botao de baixar ---------- */
+.acoes {
+  margin-top: 22px;
+  animation: aparecer 0.5s 0.15s backwards;
+}

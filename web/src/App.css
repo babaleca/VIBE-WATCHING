@@ -1,0 +1,573 @@
+.pagina {
+  max-width: 1360px;
+  height: 100dvh;
+  margin: 0 auto;
+  padding: clamp(24px, 6.5vh, 72px) 16px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* letreiro */
+.letreiro {
+  text-align: center;
+  margin-bottom: clamp(16px, 3vh, 34px);
+}
+
+.letreiro h1 {
+  margin: 0;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(20px, 4.4vh, 38px);
+  line-height: 1.4;
+  color: var(--creme);
+  text-shadow:
+    4px 4px 0 var(--tomate),
+    0 0 18px var(--tomate);
+}
+
+.letreiro p {
+  margin: 8px 0 0;
+  color: var(--mostarda);
+}
+
+/* caixa com borda grossa e sombra dura (o estilo pixel do site) */
+.caixa {
+  background: var(--creme);
+  color: var(--tinta);
+  border: 4px solid var(--tinta);
+  box-shadow: 8px 8px 0 var(--tinta);
+  padding: 20px;
+  margin-bottom: 28px;
+}
+
+.titulo-secao {
+  margin: 0 0 12px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* campo da vibe */
+.campo {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.campo input {
+  flex: 1 1 280px;
+  padding: 12px 14px;
+  background: white;
+  color: var(--tinta);
+  border: 4px solid var(--tinta);
+  outline: none;
+}
+
+.campo input:focus {
+  border-color: var(--tomate);
+}
+
+.botao {
+  padding: 12px 18px;
+  background: var(--mostarda);
+  color: var(--tinta);
+  border: 4px solid var(--tinta);
+  box-shadow: 4px 4px 0 var(--tinta);
+  cursor: pointer;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+}
+
+.botao:hover {
+  background: var(--tomate);
+  color: var(--creme);
+}
+
+.botao:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--tinta);
+}
+
+/* filtros */
+.filtros {
+  display: grid;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.grupo {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.etiqueta {
+  padding: 4px 12px;
+  background: white;
+  color: var(--tinta);
+  border: 3px solid var(--tinta);
+  cursor: pointer;
+}
+
+.etiqueta:hover {
+  background: var(--agua);
+}
+
+.etiqueta.ligada {
+  background: var(--tinta);
+  color: var(--creme);
+}
+
+/* quando o genero esta excluido, fica riscado e vermelho */
+.etiqueta.excluida {
+  background: var(--tomate);
+  color: var(--creme);
+  text-decoration: line-through;
+}
+
+/* vibes sugeridas */
+.sugestoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+.sugestao {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  text-align: left;
+  background: var(--noite);
+  color: var(--creme);
+  border: 3px solid var(--tinta);
+  box-shadow: 4px 4px 0 var(--tinta);
+  cursor: pointer;
+}
+
+.sugestao:hover {
+  background: var(--agua);
+  color: var(--tinta);
+}
+
+.sugestao .icone {
+  font-size: 30px;
+}
+
+/* ---- layout em tres colunas: estante | busca | cestinha ---- */
+.tela {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 280px;
+  gap: 28px;
+  align-items: stretch;
+  flex: 1;
+  min-height: 0; /* deixa o grid encolher ate caber na tela */
+}
+
+/* estante e cestinha ficam fixas na tela enquanto a pagina rola */
+.estante,
+.cestinha {
+  display: flex;
+  flex-direction: column;
+  border: 4px solid var(--tinta);
+  box-shadow: 8px 8px 0 var(--tinta);
+  padding: 14px;
+  min-height: 0;
+  margin-bottom: 8px; /* espaco pra sombra nao ser cortada */
+}
+
+
+
+
+
+
+
+
+.vazio {
+  grid-column: 1 / -1;
+  margin: 0;
+  text-align: center;
+  opacity: 0.8;
+}
+
+/* ---- a caixinha de filme ---- */
+.caixa-filme {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 2 / 3;
+  padding: 0;
+  background: var(--cor);
+  color: var(--tinta);
+  border: 3px solid var(--tinta);
+  box-shadow: 4px 4px 0 var(--tinta);
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.caixa-filme .faixa {
+  background: var(--tinta);
+  color: var(--creme);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 5px 0;
+}
+
+.caixa-filme .nome {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* brilho que passa por cima quando o mouse chega */
+.caixa-filme::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.65) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.caixa-filme:hover {
+  transform: translateY(-6px) scale(1.07);
+  z-index: 2;
+  box-shadow:
+    4px 4px 0 var(--tinta),
+    0 0 0 3px var(--creme),
+    0 0 20px var(--cor);
+}
+
+.caixa-filme:hover::after {
+  animation: brilho 0.7s ease-out;
+}
+
+@keyframes brilho {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+/* versao pequena, na cestinha */
+.caixa-filme.pequena {
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
+.caixa-filme.pequena .faixa {
+  display: none;
+}
+
+.caixa-filme.pequena .nome {
+  font-size: 5px;
+  padding: 3px;
+}
+
+.botao:disabled,
+.botao:disabled:hover {
+  cursor: not-allowed;
+  background: #b9b39b;
+  color: #6b6757;
+}
+
+/* o meio tem rolagem propria se a janela for baixa demais */
+.centro {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 14px 12px 2px;
+  scrollbar-color: var(--mostarda) var(--noite);
+  scrollbar-width: thin;
+}
+
+/* ================= ESTANTE DE MADEIRA ================= */
+.estante {
+  background: #8a5a36;
+  /* veios da madeira nas laterais */
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0 22px,
+    rgba(0, 0, 0, 0.12) 22px 24px
+  );
+  gap: 14px;
+}
+
+/* plaquinha pendurada */
+.placa {
+  align-self: center;
+  margin: 0;
+  padding: 8px 14px;
+  background: var(--mostarda);
+  color: var(--tinta);
+  border: 3px solid var(--tinta);
+  box-shadow: 3px 3px 0 var(--tinta);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+}
+
+/* o "interior" escuro da estante, onde ficam as prateleiras */
+.prateleiras {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: #35200f;
+  border: 4px solid var(--tinta);
+  box-shadow: inset 6px 6px 0 rgba(0, 0, 0, 0.35);
+  padding-top: 6px;
+  scrollbar-color: var(--mostarda) var(--tinta);
+  scrollbar-width: thin;
+}
+
+/* tres caixas por andar, uma meio por cima da outra */
+.caixas {
+  display: flex;
+  align-items: flex-end;
+  padding: 18px 14px 0;
+}
+
+.caixas .caixa-filme {
+  flex: 0 0 42%;
+  margin-left: -13%;
+}
+
+.caixas .caixa-filme:first-child {
+  margin-left: 0;
+}
+
+/* a tabua onde as caixas ficam apoiadas */
+.tabua {
+  height: 18px;
+  background-color: #b57c4e;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0 30px,
+    rgba(0, 0, 0, 0.14) 30px 32px
+  );
+  border-top: 4px solid #d9a572;
+  border-bottom: 4px solid var(--tinta);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.35);
+  margin-bottom: 8px;
+}
+
+/* ================= CESTO DE LOCADORA ================= */
+.cestinha {
+  background: var(--agua);
+  color: var(--tinta);
+  gap: 14px;
+  align-self: start; /* a cesta tem so a altura que precisa */
+  max-height: calc(100% - 8px);
+}
+
+.cesta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
+/* as duas alcas ficam ATRAS das caixinhas */
+.cesta::before,
+.cesta::after {
+  content: '';
+  position: absolute;
+  bottom: 84px;
+  width: 30px;
+  height: 104px;
+  border: 7px solid #b8321f;
+  border-bottom: none;
+  box-shadow: 0 0 0 3px var(--tinta);
+  z-index: 0;
+}
+
+.cesta::before {
+  left: 4px;
+}
+
+.cesta::after {
+  right: 4px;
+}
+
+/* as caixinhas se sobrepoem, igual na estante */
+.itens-cesta {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-content: start;
+  padding: 40px 52px 0 38px;
+  min-height: 150px;
+  max-height: 260px;
+  overflow-y: auto;
+  scrollbar-color: var(--mostarda) var(--tinta);
+  scrollbar-width: thin;
+}
+
+.itens-cesta .caixa-filme {
+  width: calc(100% + 14px);
+  margin-right: -14px;
+}
+
+.itens-cesta .caixa-filme:nth-child(n + 4) {
+  margin-top: -42px;
+}
+
+/* caixinhas meio tortas, como jogadas dentro do cesto */
+.itens-cesta .caixa-filme:nth-child(3n + 1) {
+  transform: rotate(-5deg);
+}
+
+.itens-cesta .caixa-filme:nth-child(3n + 2) {
+  transform: rotate(3deg);
+}
+
+.itens-cesta .caixa-filme:nth-child(3n) {
+  transform: rotate(-2deg);
+}
+
+.itens-cesta .caixa-filme:hover {
+  transform: translateY(-8px) scale(1.15) rotate(0deg);
+}
+
+/* a frente do cesto cobre a parte de baixo das caixinhas */
+.frente-cesta {
+  position: relative;
+  z-index: 3;
+  margin-top: -26px;
+  /* contorno duro em volta do formato do cesto */
+  filter: drop-shadow(3px 0 0 var(--tinta)) drop-shadow(-3px 0 0 var(--tinta))
+    drop-shadow(0 3px 0 var(--tinta)) drop-shadow(0 -3px 0 var(--tinta));
+}
+
+.aro {
+  height: 16px;
+  margin: 0 -6px;
+  background: #ff7a5c;
+}
+
+/* corpo do cesto: mais largo em cima, com furinhos de plastico */
+.corpo-cesta {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(0 0, 100% 0, 93% 100%, 7% 100%);
+  background-color: var(--tinta);
+  background-image:
+    linear-gradient(#e4472f 5px, transparent 5px),
+    linear-gradient(90deg, #e4472f 5px, transparent 5px);
+  background-size: 14px 14px;
+}
+
+/* etiqueta pendurada no cesto */
+.etiqueta-cesta {
+  background: var(--creme);
+  color: var(--tinta);
+  border: 3px solid var(--tinta);
+  box-shadow: 3px 3px 0 var(--tinta);
+  padding: 6px 10px;
+  transform: rotate(-3deg);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+}
+
+/* pagina travada na altura da janela (so em telas largas) */
+@media (min-width: 1001px) {
+  html,
+  body {
+    height: 100dvh;
+    overflow: hidden;
+  }
+}
+
+/* centraliza na altura quando sobra espaco; se faltar, rola normalmente */
+.centro > :first-child {
+  margin-top: auto;
+}
+
+.centro > :last-child {
+  margin-bottom: auto;
+}
+
+/* celular e telas estreitas: nao cabe em 3 colunas, empilha e a pagina rola */
+@media (max-width: 1000px) {
+  body {
+    overflow-y: auto;
+  }
+
+  .pagina {
+    height: auto;
+  }
+
+  .tela {
+    grid-template-columns: 1fr;
+    flex: none;
+  }
+
+  .centro {
+    overflow: visible;
+  }
+
+  .estante {
+    height: 460px;
+  }
+
+  .cestinha {
+    max-height: none;
+  }
+
+  .estante {
+    order: 2;
+  }
+
+  .cestinha {
+    order: 3;
+  }
+}
+
+/* texto da cesta vazia: cabe entre as alcas e acima da frente do cesto */
+.itens-cesta .vazio {
+  font-size: 18px;
+  line-height: 1.1;
+  margin-top: 10px;
+  padding: 0 4px 36px 12px;
+}
+
+/* botao de ligar e desligar o som */
+.botao-som {
+  position: fixed;
+  top: 18px;
+  left: 22px;
+  z-index: 101;
+  padding: 10px 12px;
+  background: var(--mostarda);
+  color: var(--tinta);
+  border: 4px solid var(--tinta);
+  box-shadow: 4px 4px 0 var(--tinta);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.botao-som:hover {
+  background: var(--agua);
+}
+
+.botao-som:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}

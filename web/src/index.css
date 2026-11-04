@@ -1,0 +1,34 @@
+/* cores do projeto: locadora dos anos 90 */
+:root {
+  --noite: #1b1f3b;
+  --noite-clara: #272c55;
+  --creme: #f6ecd2;
+  --tomate: #e4472f;
+  --mostarda: #f2b632;
+  --agua: #4fc1b0;
+  --tinta: #14172b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--noite);
+  /* quadradinhos bem discretos no fundo, pra dar cara de pixel */
+  background-image:
+    linear-gradient(var(--noite-clara) 2px, transparent 2px),
+    linear-gradient(90deg, var(--noite-clara) 2px, transparent 2px);
+  background-size: 32px 32px;
+  color: var(--creme);
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+}
+
+button,
+input {
+  font-family: inherit;
+  font-size: inherit;
+}
