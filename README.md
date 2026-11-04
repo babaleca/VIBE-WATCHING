@@ -1,75 +1,78 @@
 # Vibe Watching
 
-Busca de filmes e séries por vibe, não por título ou gênero. Em vez de procurar "terror" ou "comédia", você escreve algo como "cozy witchy" ou "crazy dream" e o programa traz os títulos com esse clima. A interface é uma locadora em pixel art: os resultados ficam numa estante, você coloca os escolhidos numa cestinha e no fim sai um recibo em JPEG pra baixar.
+Search movies and series by vibe, not by title or genre. Instead of looking for "horror" or "comedy", you write something like "cozy witchy" or "crazy dream" and the app brings back titles with that feeling. The interface is a pixel-art video rental store: results sit on a shelf, you drop the ones you pick into a basket, and at the end a receipt comes out as a JPEG you can download.
 
-![Vibe Watching em uso](preview.gif)
+You can type the vibe in any language. The site itself is in English.
 
-Vídeo completo (38s): [demo.mp4](demo.mp4)
+![Vibe Watching in action](preview.gif)
 
-## Por que eu fiz isso
+Full video (38s): [demo.mp4](demo.mp4)
 
-Eu sempre quero assistir algo com um sentimento bem específico e nunca acho. O mais perto que eu conseguia era procurar listas de outras pessoas no Letterboxd, tentando palavras diferentes até achar alguém que pensou na mesma vibe que eu. Além disso, o Letterboxd só tem filmes, e pra mim "cozy" pode ser Practical Magic ou Gilmore Girls. Aqui filmes e séries entram na mesma busca, com um filtro pra escolher só um dos dois.
+## Why I built this
 
-## Como funciona
+I always want to watch something with a very specific feeling and never find it. The closest I got was browsing other people's lists on Letterboxd, trying different words until I found someone who had thought of the same vibe. Also, Letterboxd only has movies, and for me "cozy" can be Practical Magic or Gilmore Girls. Here, movies and series go into the same search, with a filter to pick only one of them.
 
-1. Baixa os filmes e séries mais votados do TMDB (sinopse, gêneros e palavras-chave) e guarda num banco SQLite (cerca de 1500 títulos).
-2. Transforma o texto de cada título em um embedding, que é uma lista de números que representa o significado do texto (uso o Gemini pra isso).
-3. Quando alguém busca, um LLM reescreve a vibe numa descrição mais clara e diz quais gêneros claramente não combinam.
-4. A busca vira embedding também e é comparada (similaridade do cosseno) com todos os títulos. Os gêneros que a pessoa marcou como "sem" são removidos de verdade.
-5. Os 80 mais próximos passam por um segundo LLM, que reordena e escreve uma frase explicando por que cada um combina.
-6. Se o LLM falhar ou estiver ocupado, a busca cai pra ordem dos embeddings e continua funcionando.
+## How it works
 
-A API é feita em FastAPI e a interface em React.
+1. Downloads the most voted movies and series from TMDB (synopsis, genres and keywords) and stores them in a SQLite database (about 1,500 titles).
+2. Turns the text of each title into an embedding, a list of numbers that represents the meaning of the text (I use Gemini for this).
+3. When someone searches, an LLM rewrites the vibe into a clearer description and lists the genres that clearly do not fit. If the vibe is ambiguous, it also proposes 2 or 3 alternative readings, and the results of each reading are merged (reciprocal rank fusion).
+4. The search also becomes an embedding and is compared (cosine similarity) with every title. Genres the user marked as "skip" are really removed.
+5. The 80 closest titles go through a second LLM, which reorders them and writes one sentence explaining why each one fits.
+6. If the LLM fails or is busy, the search falls back to the embedding order and keeps working.
 
-## Como eu sei se está bom
+The API is built with FastAPI and the interface with React.
 
-Montei uma lista de referência com vibes e títulos que eu sei que combinam com cada uma (é o meu gosto). O `avaliar.py` roda a busca de cada vibe e conta quantos desses títulos aparecem no top 10, pra eu comparar um método com outro com um número, em vez de só olhar os resultados.
+## How I know if it is any good
 
-Métodos comparados: `puro` (embedding da vibe como foi escrita), `reescrito` (embedding da descrição feita pelo LLM), `combinado` (vibe + descrição) e `rerank` (combinado + reordenação por LLM).
+I built a reference list with vibes and titles that I know fit each one (it is my own taste). `avaliar.py` runs the search for each vibe and counts how many of those titles show up in the top 10, so I can compare one method with another using a number instead of just eyeballing results.
 
-**Minha lista (38 títulos, 6 vibes)**
+Methods compared: `puro` (embedding of the vibe as written), `reescrito` (embedding of the description written by the LLM), `combinado` (vibe + description) and `rerank` (combined + LLM reordering).
+
+**My list (38 titles, 6 vibes)**
 
 | puro | reescrito | combinado |
 |---|---|---|
 | 8/38 | 9/38 | 11/38 |
 
-Nessa lista os títulos esperados ficam no top 50 em 23 de 38 casos e no top 100 em 31 de 38 casos (combinado).
+On this list the expected titles are in the top 50 in 23 of 38 cases and in the top 100 in 31 of 38 cases (combined).
 
-**Lista da minha irmã (27 títulos, 7 vibes), usada só pra medir, sem ajustar nada em cima dela**
+**My sister's list (27 titles, 7 vibes), used only to measure, with nothing tuned on it**
 
 | puro | reescrito | combinado | rerank |
 |---|---|---|---|
 | 5/27 | 2/27 | 2/27 | 2/27 |
 
-### Cuidados ao ler esses números
+### Caveats when reading these numbers
 
-* As amostras são pequenas. Uma diferença de 2 ou 3 títulos pode ser sorte.
-* A lista de referência é o gosto de uma pessoa. Se a busca devolve um título que combina com a vibe mas que não está na lista, ele não conta. Na lista da minha irmã, "Estranhamente Aconchegante" trouxe O Estranho Mundo de Jack, Amélie e Encanto, que fazem sentido, mas ela tinha escolhido Coraline, Grinch e Boxtrolls.
-* Nos meus testes o rerank ficou igual ao combinado em contagem, porque ele só reordena os 50 candidatos: se o título certo não está entre eles, não adianta.
+* The samples are small. A difference of 2 or 3 titles can be luck.
+* The reference list is one person's taste. If the search returns a title that fits the vibe but is not on the list, it does not count. On my sister's list, the vibe "Strangely Cozy" returned The Nightmare Before Christmas, Amélie and Encanto, which make sense, but she had picked Coraline, The Grinch and The Boxtrolls.
+* In my tests the rerank scored the same as combined, because it only reorders the candidates: if the right title is not among them, it cannot help.
 
-## O que eu descobri até agora
+## What I found so far
 
-* A busca por embedding acha títulos pelo assunto, não pelo clima. Com "cozy witchy" apareceram filmes de terror sobre bruxas, que são o oposto de aconchegante.
-* Reescrever a busca com um LLM ajudou na minha lista e atrapalhou na da minha irmã. Ele escolhe uma interpretação, e quando a vibe é curta ou ambígua ele pode escolher a errada.
-* "Irmandade" sozinha virou terror com freiras (a busca pura entendeu como ordem religiosa) e máfia e gangues (o LLM entendeu como irmãos). Ninguém entendeu irmandade entre garotas, que era o que ela queria dizer.
-* Embedding não entende negação: escrever "sem terror" na busca puxa mais terror. Por isso os gêneros que a pessoa não quer são filtrados de fora, e não escritos no texto da busca.
-* O conjunto dos mais votados deixa de fora muita coisa de nicho, então alguns títulos esperados nem existem no banco.
+* Embedding search finds titles by topic, not by mood. With "cozy witchy" it returned horror movies about witches, which are the opposite of cozy.
+* Rewriting the query with an LLM helped on my list and hurt on my sister's. It picks one interpretation, and when the vibe is short or ambiguous it can pick the wrong one.
+* "Sisterhood" alone turned into horror with nuns (plain search read it as a religious order) and mafia and gangs (the LLM read it as brotherhood). Nobody understood sisterhood between girls, which is what she meant.
+* Embeddings do not understand negation: writing "no horror" in the query pulls in more horror. That is why unwanted genres are filtered out instead of written into the query text.
+* The most-voted set leaves out a lot of niche titles, so some expected titles are not even in the database.
 
-## Limitações
+## Limitations
 
-* Uso o plano grátis do Gemini, que tem limite de requisições por dia. Quando o limite acaba, a busca volta pro modo sem LLM.
-* Só tem os títulos que baixei do TMDB.
+* I use the free Gemini plan, which has a daily request limit. When it runs out, search falls back to the no-LLM mode.
+* It only has the titles I downloaded from TMDB.
+* Synopses and genres in the database are in Portuguese (titles and posters are in English). Embeddings handle both languages, but a full English dataset is on the list.
 
-## Próximos passos
+## Next steps
 
-* Quando a vibe for ambígua, o LLM propor 2 ou 3 leituras diferentes e misturar os resultados
-* Medir com outras pessoas: elas marcam quais dos 10 resultados combinam com a vibe, em vez de eu comparar com uma lista fixa
-* Filtro de faixa etária
-* Gerar tags de vibe de cada título com LLM e comparar com a versão atual
+* Measure with other people: they mark which of the 10 results fit the vibe, instead of me comparing with a fixed list
+* Search by a title you like, to find similar movies and series
+* Age rating filter
+* Generate vibe tags for each title with an LLM and compare with the current version
 
-## Como rodar
+## How to run
 
-Precisa de Python, Node, uma chave de API do TMDB e uma chave do Gemini.
+You need Python, Node, a TMDB API key and a Gemini API key.
 
 ```
 python -m venv .venv
@@ -77,29 +80,30 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-Crie um arquivo `.env` na raiz com:
+Create a `.env` file in the root with:
 
 ```
-TMDB_API_KEY=sua_chave
-GEMINI_API_KEY=sua_chave
+TMDB_API_KEY=your_key
+GEMINI_API_KEY=your_key
 ```
 
-Montar o banco e os embeddings:
+Build the database and the embeddings:
 
 ```
 python baixar_titulos.py filme 50
 python baixar_titulos.py serie 25
 python gerar_embeddings.py
+python titulos_em_ingles.py
 ```
 
-Buscar pelo terminal:
+Search from the terminal:
 
 ```
 python buscar.py "cozy witchy"
 python buscar.py "cozy" --tipo serie --sem terror
 ```
 
-Rodar a interface (dois terminais):
+Run the interface (two terminals):
 
 ```
 uvicorn api:app --port 8000
@@ -111,15 +115,19 @@ npm install
 npm run dev
 ```
 
-Avaliar a busca:
+Evaluate the search:
 
 ```
 python avaliar.py
-python avaliar.py --lista outra_lista.json --detalhes
+python avaliar.py --lista other_list.json --detalhes
 ```
 
-O banco (`filmes.db`) e o cache dos embeddings não estão no repositório, eles são criados quando você roda os scripts.
+The database (`filmes.db`) and the embedding cache are not in the repository. They are created when you run the scripts.
 
-## Créditos
+## Credits
 
-Os dados e as capas de filmes e séries vêm do [TMDB](https://www.themoviedb.org/). Este produto usa a API do TMDB, mas não é endossado nem certificado por ela.
+Movie and series data and covers come from [TMDB](https://www.themoviedb.org/). This product uses the TMDB API but is not endorsed or certified by TMDB.
+
+## Copyright
+
+Copyright © 2026 Bárbara Bandarra. All rights reserved.
