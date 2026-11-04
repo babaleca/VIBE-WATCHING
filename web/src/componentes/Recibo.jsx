@@ -6,7 +6,7 @@ import ReciboPapel from './ReciboPapel'
 import './Recibo.css'
 
 // a tela do recibo: escurece o fundo, imprime e depois deixa baixar
-function Recibo({ itens, vibe, aoFechar }) {
+function Recibo({ itens, aoFechar }) {
   // 'imprimindo' -> 'pronto'
   const [fase, setFase] = useState('imprimindo')
   const [baixando, setBaixando] = useState(false)
@@ -61,7 +61,7 @@ function Recibo({ itens, vibe, aoFechar }) {
 
   return (
     <div className="recibo-fundo" onClick={cliqueNoFundo}>
-      <button className="fechar" onClick={aoFechar} aria-label="Fechar">
+      <button className="fechar" onClick={aoFechar} aria-label="Close">
         X
       </button>
 
@@ -79,7 +79,6 @@ function Recibo({ itens, vibe, aoFechar }) {
             <ReciboPapel
               ref={papelRef}
               itens={itens}
-              vibe={vibe}
               numero={numero}
               data={data}
             />
@@ -91,7 +90,7 @@ function Recibo({ itens, vibe, aoFechar }) {
         {fase === 'pronto' && (
           <div className="acoes">
             <button className="botao" onClick={baixar} disabled={baixando}>
-              {baixando ? 'GERANDO...' : 'BAIXAR JPEG'}
+              {baixando ? 'CREATING...' : 'DOWNLOAD JPEG'}
             </button>
           </div>
         )}

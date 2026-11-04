@@ -4,7 +4,7 @@ import CaixaFilme from './CaixaFilme'
 function Cestinha({ itens, aoDevolver, aoFinalizar }) {
   return (
     <aside className="cestinha">
-      <h2 className="placa">CESTINHA</h2>
+      <h2 className="placa">BASKET</h2>
 
       <div className="cesta">
         <div className="itens-cesta">
@@ -17,7 +17,7 @@ function Cestinha({ itens, aoDevolver, aoFinalizar }) {
             />
           ))}
           {itens.length === 0 && (
-            <p className="vazio">vazia por enquanto. clica numa caixa da estante!</p>
+            <p className="vazio">nothing here yet. click a box on the shelf!</p>
           )}
         </div>
 
@@ -26,7 +26,7 @@ function Cestinha({ itens, aoDevolver, aoFinalizar }) {
           <div className="aro" />
           <div className="corpo-cesta">
             <span className="etiqueta-cesta">
-              {itens.length} {itens.length === 1 ? 'ITEM' : 'ITENS'}
+              {itens.length} {itens.length === 1 ? 'ITEM' : 'ITEMS'}
             </span>
           </div>
         </div>
@@ -38,7 +38,7 @@ function Cestinha({ itens, aoDevolver, aoFinalizar }) {
         disabled={itens.length === 0}
         onClick={aoFinalizar}
       >
-        FINALIZAR
+        PRINT RECEIPT
       </button>
     </aside>
   )

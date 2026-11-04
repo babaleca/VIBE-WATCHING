@@ -1,0 +1,151 @@
+{
+  "Adrenalina Neon": [
+    {
+      "id": 328387,
+      "tipo": "filme",
+      "titulo": "Nerve - Um Jogo Sem Regras"
+    },
+    {
+      "id": 77950,
+      "tipo": "filme",
+      "titulo": "Turbo"
+    },
+    {
+      "id": 94605,
+      "tipo": "serie",
+      "titulo": "Arcane"
+    }
+  ],
+  "Girls Girl picante": [
+    {
+      "id": 37735,
+      "tipo": "filme",
+      "titulo": "A Mentira"
+    },
+    {
+      "id": 13971,
+      "tipo": "filme",
+      "titulo": "Garota Mimada"
+    },
+    {
+      "id": 12620,
+      "tipo": "filme",
+      "titulo": "A Casa das Coelhinhas"
+    }
+  ],
+  "Refúgio Verde": [
+    {
+      "id": 269,
+      "tipo": "serie",
+      "titulo": "Lances da Vida"
+    },
+    {
+      "id": 32790,
+      "tipo": "filme",
+      "titulo": "A Bruxa do Bem"
+    },
+    {
+      "id": 828595,
+      "tipo": "filme",
+      "titulo": "The Good Witch of Christmas"
+    },
+    {
+      "id": 638186,
+      "tipo": "filme",
+      "titulo": "A Bruxa do Bem 6"
+    },
+    {
+      "id": 13179,
+      "tipo": "filme",
+      "titulo": "Tinker Bell: Uma Aventura no Mundo das Fadas"
+    },
+    {
+      "id": 44683,
+      "tipo": "filme",
+      "titulo": "Tinker Bell e o Resgate da Fada"
+    },
+    {
+      "id": 175112,
+      "tipo": "filme",
+      "titulo": "Tinker Bell: Fadas e Piratas"
+    },
+    {
+      "id": 25475,
+      "tipo": "filme",
+      "titulo": "Tinker Bell e o Tesouro Perdido"
+    }
+  ],
+  "Meio Espirita Esperançoso e Infantil": [
+    {
+      "id": 508442,
+      "tipo": "filme",
+      "titulo": "Soul"
+    },
+    {
+      "id": 9023,
+      "tipo": "filme",
+      "titulo": "Spirit: O Corcel Indomável"
+    }
+  ],
+  "Estranhamente Aconchegante": [
+    {
+      "id": 170687,
+      "tipo": "filme",
+      "titulo": "Os Boxtrolls"
+    },
+    {
+      "id": 8871,
+      "tipo": "filme",
+      "titulo": "O Grinch"
+    },
+    {
+      "id": 14836,
+      "tipo": "filme",
+      "titulo": "Coraline e o Mundo Secreto"
+    }
+  ],
+  "Irmandade": [
+    {
+      "id": 9820,
+      "tipo": "filme",
+      "titulo": "Operação Cupido"
+    }
+  ],
+  "Medieval anos 2000": [
+    {
+      "id": 14442,
+      "tipo": "filme",
+      "titulo": "Uma Garota Encantada"
+    },
+    {
+      "id": 808,
+      "tipo": "filme",
+      "titulo": "Shrek"
+    },
+    {
+      "id": 810,
+      "tipo": "filme",
+      "titulo": "Shrek Terceiro"
+    },
+    {
+      "id": 10192,
+      "tipo": "filme",
+      "titulo": "Shrek Para Sempre"
+    },
+    {
+      "id": 809,
+      "tipo": "filme",
+      "titulo": "Shrek 2"
+    },
+    {
+      "id": 50642,
+      "tipo": "filme",
+      "titulo": "Xuxa em: O Mistério de Feiurinha"
+    },
+    {
+      "id": 4523,
+      "tipo": "filme",
+      "titulo": "Encantada"
+    }
+  ]
+}

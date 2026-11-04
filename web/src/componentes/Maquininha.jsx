@@ -9,7 +9,7 @@ function Maquininha({ fase }) {
 
       <div className="painel">
         <div className="visor">
-          <span className="piscando">IMPRIMINDO...</span>
+          <span className="piscando">PRINTING...</span>
         </div>
         <div className="luzes">
           <i className="luz vermelha" />

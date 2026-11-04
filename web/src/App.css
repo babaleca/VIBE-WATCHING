@@ -2,7 +2,7 @@
   max-width: 1360px;
   height: 100dvh;
   margin: 0 auto;
-  padding: clamp(24px, 6.5vh, 72px) 16px 20px;
+  padding: clamp(24px, 6.5vh, 72px) 16px 34px;
   display: flex;
   flex-direction: column;
 }
@@ -570,4 +570,98 @@
 .botao-som:active {
   transform: translate(4px, 4px);
   box-shadow: none;
+}
+
+/* ---------- capas ---------- */
+.caixa-filme .capa {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  background: var(--cor);
+}
+
+/* titulo que aparece embaixo da capa quando o mouse chega */
+.caixa-filme .legenda {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 6px 4px;
+  background: rgba(20, 23, 43, 0.94);
+  color: var(--creme);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  line-height: 1.5;
+  transform: translateY(100%);
+  transition: transform 0.15s;
+}
+
+.caixa-filme:hover .legenda {
+  transform: translateY(0);
+}
+
+.caixa-filme.pequena .legenda {
+  font-size: 5px;
+  padding: 3px 2px;
+}
+
+/* ---------- mensagens do meio ---------- */
+.entendi,
+.aviso-erro {
+  margin-bottom: 24px;
+  padding: 12px 14px;
+  border: 3px solid var(--tinta);
+  box-shadow: 4px 4px 0 var(--tinta);
+}
+
+.entendi {
+  background: var(--noite-clara);
+  border-color: var(--mostarda);
+  box-shadow: 4px 4px 0 var(--tinta);
+  color: var(--creme);
+}
+
+.entendi .titulo-secao {
+  color: var(--mostarda);
+  margin-bottom: 6px;
+}
+
+.entendi p {
+  margin: 0;
+}
+
+.aviso-erro {
+  background: var(--tomate);
+  color: var(--creme);
+}
+
+.prateleiras .vazio {
+  padding: 28px 16px;
+  color: var(--creme);
+  font-size: 20px;
+}
+
+/* ---------- credito do TMDB ---------- */
+.creditos {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--creme);
+  opacity: 0.6;
+}
+
+.creditos a {
+  color: var(--agua);
+}
+
+@media (max-width: 1000px) {
+  .creditos {
+    position: static;
+    margin-top: 24px;
+  }
 }

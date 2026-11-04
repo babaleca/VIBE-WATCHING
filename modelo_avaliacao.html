@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vibe Watching - avaliação</title>
+<style>
+  :root { --noite:#1b1f3b; --creme:#f6ecd2; --tomate:#e4472f; --mostarda:#f2b632; --agua:#4fc1b0; --tinta:#14172b; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--noite); color:var(--creme); font-family: system-ui, sans-serif; line-height:1.4; }
+  main { max-width: 1000px; margin: 0 auto; padding: 24px 16px 80px; }
+  h1 { color: var(--mostarda); margin: 0 0 8px; }
+  .intro { background: var(--creme); color: var(--tinta); padding: 14px 16px; border: 3px solid var(--tinta); box-shadow: 4px 4px 0 var(--tinta); }
+  .intro input { padding: 6px 8px; font-size: 16px; border: 2px solid var(--tinta); width: 220px; max-width: 100%; }
+  h2 { margin: 36px 0 4px; color: var(--mostarda); }
+  .dica { margin: 0 0 12px; opacity: .8; }
+  .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+  .item { background: var(--creme); color: var(--tinta); border: 3px solid var(--tinta); box-shadow: 4px 4px 0 var(--tinta); display:flex; flex-direction:column; }
+  .item.sim { outline: 4px solid var(--agua); }
+  .item.nao { outline: 4px solid var(--tomate); opacity: .75; }
+  .capa { aspect-ratio: 2/3; background: #888; display:flex; align-items:center; justify-content:center; text-align:center; padding:8px; font-weight:bold; }
+  .capa img { width:100%; height:100%; object-fit:cover; display:block; }
+  .nome { padding: 6px 8px 2px; font-weight: bold; font-size: 14px; }
+  .sub { padding: 0 8px 6px; font-size: 12px; opacity: .7; }
+  .botoes { display:flex; margin-top:auto; }
+  .botoes button { flex:1; padding: 10px 0; border: 0; border-top: 3px solid var(--tinta); font-size: 15px; font-weight: bold; cursor: pointer; background: #ddd; }
+  .botoes button + button { border-left: 3px solid var(--tinta); }
+  .item.sim .botoes .b-sim { background: var(--agua); }
+  .item.nao .botoes .b-nao { background: var(--tomate); color: white; }
+  .barra { position: fixed; left:0; right:0; bottom:0; background: var(--tinta); border-top: 3px solid var(--mostarda); padding: 10px 16px; display:flex; gap:12px; align-items:center; justify-content:space-between; }
+  .barra button { background: var(--mostarda); border: 3px solid var(--creme); padding: 10px 16px; font-weight:bold; font-size:16px; cursor:pointer; }
+  .barra button:disabled { opacity:.5; cursor:not-allowed; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Vibe Watching: avaliação</h1>
+  <div class="intro">
+    <p>Pra cada vibe abaixo, olha os 10 resultados e marca <b>cabe</b> se o filme ou série combina com o clima da vibe, ou <b>não cabe</b> se não combina. Não precisa ser um título que você conheça ou goste: o que importa é se tem a vibe. Se não conhecer o título, pode pular.</p>
+    <p>Seu nome (só pra eu saber de quem é): <input id="nome" placeholder="ex: maria" /></p>
+  </div>
+  <div id="vibes"></div>
+</main>
+<div class="barra">
+  <span id="progresso"></span>
+  <button id="baixar">Baixar respostas</button>
+</div>
+
+<script>
+const dados = __DADOS__;
+const CAPA = 'https://image.tmdb.org/t/p/w185';
+const raiz = document.getElementById('vibes');
+
+function marcar(item, valor, el) {
+  item.cabe = item.cabe === valor ? null : valor; // clicar de novo desmarca
+  el.className = 'item' + (item.cabe === true ? ' sim' : item.cabe === false ? ' nao' : '');
+  atualizar();
+}
+
+dados.vibes.forEach((bloco) => {
+  const h = document.createElement('h2');
+  h.textContent = 'Vibe: ' + bloco.vibe;
+  const p = document.createElement('p');
+  p.className = 'dica';
+  p.textContent = 'Esses títulos combinam com essa vibe?';
+  const grade = document.createElement('div');
+  grade.className = 'grade';
+
+  bloco.itens.forEach((item) => {
+    const el = document.createElement('div');
+    el.className = 'item';
+    const capa = document.createElement('div');
+    capa.className = 'capa';
+    if (item.poster) {
+      const img = document.createElement('img');
+      img.src = CAPA + item.poster;
+      img.alt = item.titulo;
+      img.onerror = () => { capa.textContent = item.titulo; };
+      capa.appendChild(img);
+    } else {
+      capa.textContent = item.titulo;
+    }
+    const nome = document.createElement('div');
+    nome.className = 'nome';
+    nome.textContent = item.titulo;
+    const sub = document.createElement('div');
+    sub.className = 'sub';
+    sub.textContent = (item.tipo === 'serie' ? 'Série' : 'Filme') + (item.ano ? ' · ' + item.ano : '');
+    const botoes = document.createElement('div');
+    botoes.className = 'botoes';
+    const sim = document.createElement('button');
+    sim.className = 'b-sim'; sim.textContent = 'cabe';
+    sim.onclick = () => marcar(item, true, el);
+    const nao = document.createElement('button');
+    nao.className = 'b-nao'; nao.textContent = 'não cabe';
+    nao.onclick = () => marcar(item, false, el);
+    botoes.append(sim, nao);
+    el.append(capa, nome, sub, botoes);
+    grade.appendChild(el);
+  });
+  raiz.append(h, p, grade);
+});
+
+function atualizar() {
+  const todos = dados.vibes.flatMap((b) => b.itens);
+  const feitos = todos.filter((i) => i.cabe !== null).length;
+  document.getElementById('progresso').textContent = feitos + ' de ' + todos.length + ' marcados';
+}
+atualizar();
+
+document.getElementById('baixar').onclick = () => {
+  const nome = document.getElementById('nome').value.trim() || 'sem-nome';
+  const saida = { avaliador: nome, metodo: dados.metodo, vibes: dados.vibes };
+  const blob = new Blob([JSON.stringify(saida, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'respostas-' + nome.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.json';
+  a.click();
+};
+</script>
+</body>
+</html>

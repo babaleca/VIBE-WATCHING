@@ -232,8 +232,9 @@
 }
 
 .recibo-vibe {
-  margin-top: 6px;
-  text-align: center;
+  margin: 8px 0 4px;
+  text-align: left;
+  font-weight: bold;
   overflow-wrap: anywhere;
 }
 

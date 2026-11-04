@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import time
 import sqlite3
@@ -35,14 +36,19 @@ def escolher(nome):
     return saida
 
 
+# uso: python montar_lista_ouro.py [arquivo_de_vibes.json] [lista_de_saida.json]
+ARQ_VIBES = sys.argv[1] if len(sys.argv) > 1 else "vibes.json"
+ARQ_SAIDA = sys.argv[2] if len(sys.argv) > 2 else "lista_ouro.json"
+
+
 def main():
-    with open("vibes.json", encoding="utf-8") as arq:
+    with open(ARQ_VIBES, encoding="utf-8") as arq:
         vibes = json.load(arq)
 
     # se ja existe uma lista ouro, continua dela
     ouro = {}
-    if os.path.exists("lista_ouro.json"):
-        with open("lista_ouro.json", encoding="utf-8") as arq:
+    if os.path.exists(ARQ_SAIDA):
+        with open(ARQ_SAIDA, encoding="utf-8") as arq:
             ouro = json.load(arq)
 
     conn = sqlite3.connect("filmes.db")
@@ -62,9 +68,9 @@ def main():
                     lista.append(t)
                     ja_tem.add((t["id"], t["tipo"]))
 
-    with open("lista_ouro.json", "w", encoding="utf-8") as arq:
+    with open(ARQ_SAIDA, "w", encoding="utf-8") as arq:
         json.dump(ouro, arq, ensure_ascii=False, indent=2)
-    print("\nlista salva em lista_ouro.json")
+    print(f"\nlista salva em {ARQ_SAIDA}")
     conn.close()
 
 

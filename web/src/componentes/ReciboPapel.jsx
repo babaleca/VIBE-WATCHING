@@ -12,9 +12,20 @@ function barrasDoNumero(numero) {
   return barras
 }
 
-function ReciboPapel({ itens, vibe, numero, data, ref }) {
+function ReciboPapel({ itens, numero, data, ref }) {
   const filmes = itens.filter((t) => t.tipo === 'filme').length
   const series = itens.length - filmes
+
+  // agrupa os itens por vibe (na ordem em que apareceram)
+  const grupos = []
+  for (const item of itens) {
+    let grupo = grupos.find((g) => g.vibe === item.vibe)
+    if (!grupo) {
+      grupo = { vibe: item.vibe, itens: [] }
+      grupos.push(grupo)
+    }
+    grupo.itens.push(item)
+  }
 
   return (
     // o "wrap" tem uma margem em volta: no JPEG ela vira a moldura azul
@@ -22,38 +33,41 @@ function ReciboPapel({ itens, vibe, numero, data, ref }) {
       <div className="recibo">
         <div className="recibo-topo">
           <div className="recibo-logo">VIBE WATCHING</div>
-          <div>VÍDEO LOCADORA</div>
-          <div className="recibo-pequeno">recibo de locação</div>
+          <div>VIDEO RENTAL</div>
+          <div className="recibo-pequeno">rental receipt</div>
         </div>
 
         <div className="pontilhada" />
 
         <div className="recibo-info">
-          <span>Nº {numero}</span>
-          <span>{data.toLocaleString('pt-BR', FORMATO)}</span>
+          <span>No. {numero}</span>
+          <span>{data.toLocaleString('en-US', FORMATO)}</span>
         </div>
-        {vibe && <div className="recibo-vibe">VIBE: "{vibe}"</div>}
 
         <div className="pontilhada" />
 
-        <ul className="recibo-lista">
-          {itens.map((t) => (
-            <li key={t.id + t.tipo}>
-              <span className="item-nome">{t.titulo}</span>
-              <span className="item-tipo">{t.tipo === 'serie' ? 'SÉRIE' : 'FILME'}</span>
-            </li>
-          ))}
-        </ul>
+        {grupos.map((g) => (
+          <div key={g.vibe}>
+            {g.vibe && <div className="recibo-vibe">VIBE: "{g.vibe}"</div>}
+            <ul className="recibo-lista">
+              {g.itens.map((t) => (
+                <li key={t.id + t.tipo}>
+                  <span className="item-nome">{t.titulo}</span>
+                  <span className="item-tipo">{t.tipo === 'serie' ? 'SERIES' : 'MOVIE'}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
 
         <div className="pontilhada" />
 
         <div className="recibo-total">
-          <span>TOTAL DE ITENS</span>
+          <span>TOTAL ITEMS</span>
           <span>{itens.length}</span>
         </div>
         <div className="recibo-pequeno">
-          {filmes} {filmes === 1 ? 'filme' : 'filmes'} · {series}{' '}
-          {series === 1 ? 'série' : 'séries'}
+          {filmes} {filmes === 1 ? 'movie' : 'movies'} · {series} series
         </div>
 
         <div className="pontilhada" />
@@ -71,9 +85,9 @@ function ReciboPapel({ itens, vibe, numero, data, ref }) {
         </div>
 
         <div className="recibo-rodape">
-          OBRIGADA PELA VISITA!
+          THANKS FOR VISITING!
           <br />
-          REBOBINE ANTES DE DEVOLVER
+          PLEASE BE KIND, REWIND
         </div>
       </div>
     </div>
