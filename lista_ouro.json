@@ -143,6 +143,28 @@
     {
       "id": 24548,
       "titulo": "Quase Igual aos Outros"
+    },
+    {
+      "id": 86163,
+      "tipo": "serie",
+      "titulo": "Gentleman Jack"
+    }
+  ],
+  "cozy": [
+    {
+      "id": 6435,
+      "tipo": "filme",
+      "titulo": "Da Magia à Sedução"
+    },
+    {
+      "id": 68799,
+      "tipo": "serie",
+      "titulo": "Gilmore Girls: Um Ano para Recordar"
+    },
+    {
+      "id": 4586,
+      "tipo": "serie",
+      "titulo": "Tal Mãe, Tal Filha"
     }
   ]
 }
