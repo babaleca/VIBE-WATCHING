@@ -3,3 +3,11 @@
 __pycache__/
 *.db
 cache_embeddings.json
+
+# generated caches (rebuilt automatically)
+reescritas.json
+rerank_cache.json
+
+# local evaluation outputs
+avaliacao*.html
+respostas-*.json

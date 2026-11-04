@@ -36,9 +36,9 @@ def escolher(nome):
     return saida
 
 
-# uso: python montar_lista_ouro.py [arquivo_de_vibes.json] [lista_de_saida.json]
-ARQ_VIBES = sys.argv[1] if len(sys.argv) > 1 else "vibes.json"
-ARQ_SAIDA = sys.argv[2] if len(sys.argv) > 2 else "lista_ouro.json"
+# uso: python -m evaluation.montar_lista_ouro [arquivo_de_vibes.json] [lista_de_saida.json]
+ARQ_VIBES = sys.argv[1] if len(sys.argv) > 1 else "evaluation/data/vibes.json"
+ARQ_SAIDA = sys.argv[2] if len(sys.argv) > 2 else "evaluation/data/lista_ouro.json"
 
 
 def main():

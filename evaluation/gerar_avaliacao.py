@@ -1,5 +1,5 @@
 # gera uma folha em HTML pra alguem marcar quais resultados "cabem" em cada vibe
-# uso: python gerar_avaliacao.py vibes_irma.json [metodo] [saida.html]
+# uso: python -m evaluation.gerar_avaliacao evaluation/data/vibes_irma.json [metodo] [saida.html]
 # o arquivo de vibes pode ser um .json (usa as chaves) ou um .txt (uma vibe por linha)
 import sys
 import json
@@ -41,7 +41,7 @@ def main():
             })
         dados["vibes"].append({"vibe": vibe, "itens": itens})
 
-    with open("modelo_avaliacao.html", encoding="utf-8") as arq:
+    with open("evaluation/modelo_avaliacao.html", encoding="utf-8") as arq:
         pagina = arq.read()
     # evita que um "</script>" dentro dos dados quebre a pagina
     texto = json.dumps(dados, ensure_ascii=False).replace("</", "<\\/")

@@ -25,7 +25,7 @@ The API is built with FastAPI and the interface with React.
 
 ## How I know if it is any good
 
-I built a reference list with vibes and titles that I know fit each one (it is my own taste). `avaliar.py` runs the search for each vibe and counts how many of those titles show up in the top 10, so I can compare one method with another using a number instead of just eyeballing results.
+I built a reference list with vibes and titles that I know fit each one (it is my own taste). `evaluation/avaliar.py` runs the search for each vibe and counts how many of those titles show up in the top 10, so I can compare one method with another using a number instead of just eyeballing results.
 
 Methods compared: `puro` (embedding of the vibe as written), `reescrito` (embedding of the description written by the LLM), `combinado` (vibe + description) and `rerank` (combined + LLM reordering).
 
@@ -118,9 +118,11 @@ npm run dev
 Evaluate the search:
 
 ```
-python avaliar.py
-python avaliar.py --lista other_list.json --detalhes
+python -m evaluation.avaliar
+python -m evaluation.avaliar --lista evaluation/data/lista_teste_irma.json --detalhes
 ```
+
+Everything related to evaluation (scripts, reference lists, vibe lists) lives in the `evaluation/` folder. Run these commands from the repository root.
 
 The database (`filmes.db`) and the embedding cache are not in the repository. They are created when you run the scripts.
 
@@ -128,6 +130,6 @@ The database (`filmes.db`) and the embedding cache are not in the repository. Th
 
 Movie and series data and covers come from [TMDB](https://www.themoviedb.org/). This product uses the TMDB API but is not endorsed or certified by TMDB.
 
-## Copyright
+## License
 
-Copyright © 2026 Bárbara Bandarra. All rights reserved.
+Copyright © 2026 babaleca. Licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE): you are free to use, study, modify and share this project for noncommercial purposes (personal use, learning, hobby projects, research). Commercial use is not allowed.

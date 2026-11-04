@@ -1,12 +1,12 @@
 # junta os arquivos de respostas e mostra quantos resultados "cabem" em cada vibe
-# uso: python resumir_avaliacao.py respostas-maria.json respostas-joao.json
+# uso: python -m evaluation.resumir_avaliacao respostas-maria.json respostas-joao.json
 import sys
 import json
 
 
 def main():
     if len(sys.argv) < 2:
-        print("uso: python resumir_avaliacao.py respostas-*.json")
+        print("uso: python -m evaluation.resumir_avaliacao respostas-*.json")
         return
 
     por_vibe = {}  # vibe -> [quantos marcaram "cabe", quantos marcaram ao todo]

@@ -1,5 +1,5 @@
 # mesma vibe em varios idiomas: os resultados deveriam ser parecidos
-# uso: python testar_idiomas.py
+# uso: python -m evaluation.testar_idiomas
 from buscar import carregar_titulos, buscar_vibe
 
 # o primeiro de cada grupo (ingles) e a referencia

@@ -10,7 +10,7 @@ PADRAO = ["puro", "combinado", "rerank"]  # "reescrito" gasta cota e perdeu nas 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--detalhes", action="store_true")  # mostra os resultados de cada busca
-    parser.add_argument("--lista", default="lista_ouro.json")  # qual lista de titulos esperados
+    parser.add_argument("--lista", default="evaluation/data/lista_ouro.json")  # qual lista de titulos esperados
     parser.add_argument("--metodos", nargs="+", choices=TODOS_METODOS, default=PADRAO)
     args = parser.parse_args()
     METODOS = args.metodos
